@@ -6,13 +6,16 @@ type State = {
   users: User[];
   signupAttempts: number;
   loginAttempts: number;
+  usedNames: string[];
 };
 const initialState: State = {
   user: null,
   // user: new User("a", "a"),
   users: [],
+  // users: [new User("a", "a")],
   signupAttempts: 0,
   loginAttempts: 0,
+  usedNames: [],
 };
 
 type Action =
@@ -22,6 +25,10 @@ type Action =
   | {
       type: "SIGNUP" | "LOGIN";
       payload: User;
+    }
+  | {
+      type: "USERNAME_USED";
+      payload: string;
     };
 
 const storeReducer = (state: State, action: Action): State => {
@@ -38,6 +45,8 @@ const storeReducer = (state: State, action: Action): State => {
       return { ...state, signupAttempts: state.signupAttempts + 1 };
     case "LOGIN_ATTEMPT":
       return { ...state, loginAttempts: state.loginAttempts + 1 };
+    case "USERNAME_USED":
+      return { ...state, usedNames: [...state.usedNames, action.payload] };
   }
 };
 
@@ -47,17 +56,13 @@ type DispatchType = React.Dispatch<Action> | ((arg: any) => void);
 export const DispatchContext = React.createContext<DispatchType>(() => {});
 export const StateContext = React.createContext(initialState);
 
-type Props = { children: React.ReactNode };
-
-export default function Store(props: Props) {
+export default function Store({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = React.useReducer(storeReducer, initialState);
 
   return (
     <>
       <DispatchContext.Provider value={dispatch}>
-        <StateContext.Provider value={state}>
-          {props.children}
-        </StateContext.Provider>
+        <StateContext.Provider value={state}>{children}</StateContext.Provider>
       </DispatchContext.Provider>
     </>
   );

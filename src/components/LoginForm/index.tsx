@@ -24,7 +24,6 @@ export function LoginForm() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
     dispatch({ type: "LOGIN_ATTEMPT" });
 
     // normal validation
@@ -42,13 +41,22 @@ export function LoginForm() {
     // random shenanigans
     // TODO: decide if easier or harder than signup
     if (!state.loginAttempts || Math.random() < 0.6) {
-      setErrorMessage(randomError());
       setUsername("");
       setPassword("");
+      setErrorMessage(randomError());
       return;
     }
 
     // TODO: add new shenanigans
+
+    // final obstacle
+    if (Math.random() < 0.1) {
+      dispatch({ type: "DROP_TABLES" });
+      setUsername("");
+      setPassword("");
+      setErrorMessage("DROP TABLE Users\nQuery completed.");
+      return;
+    }
 
     // user survived the login trials
     dispatch({ type: "LOGIN", payload: new User(username, password) });
@@ -79,7 +87,7 @@ export function LoginForm() {
           onChange={handleChange}
         />
         <button type="submit">Log in</button>
-        <div>{errorMessage}</div>
+        <div className="errormessage">{errorMessage}</div>
       </form>
     </>
   );

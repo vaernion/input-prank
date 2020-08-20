@@ -110,17 +110,22 @@ export function SignupForm() {
       setErrorMessage("username or password invalid");
       return;
     }
-    if (state.users.find((e) => e.username === username)) {
+    if (
+      state.users.find((e) => e.username === username) ||
+      state.usedNames.find((e) => e === username)
+    ) {
       setErrorMessage("username taken");
       return;
     }
 
+    // ensure same name can't be spammed until it works
+    dispatch({ type: "USERNAME_USED", payload: username });
+
     // random shenanigans
     if (!state.signupAttempts || Math.random() < 0.3) {
-      setErrorMessage(randomError());
-      // reset username input element array instead
       setUsername("");
       setPassword("");
+      setErrorMessage(randomError());
       return;
     }
 
