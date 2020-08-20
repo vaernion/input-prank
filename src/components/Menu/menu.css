@@ -1,0 +1,69 @@
+.menu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  --link-color: blue;
+  --link-active-color: black;
+  --link-decoration-color: red;
+  --link-hover-color: black;
+  --parent-bg-color: white;
+  --children-border-color: gold;
+  --children-bg-color: black;
+  --children-link-color: red;
+  --children-link-decoration-color: green;
+  --children-link-hover-color: white;
+
+  --item-height: 1.8em;
+  --child-item-height: 1.3em;
+}
+.menu-link {
+  font-size: var(--item-height);
+  margin: 0 0.7em 0 0.7em;
+  text-decoration: none;
+  color: var(--link-color);
+}
+.menu-link-active {
+  color: var(--link-active-color);
+  text-decoration: underline var(--link-decoration-color);
+}
+.menu-link:hover {
+  color: var(--link-hover-color);
+}
+.menu-link img {
+  height: var(--item-height);
+}
+.menu-child .menu-link img {
+  height: var(--child-item-height);
+}
+.menu-parent {
+  height: 100%;
+  background-color: var(--parent-bg-color);
+}
+.menu-children {
+  display: flex;
+  flex-flow: column;
+  position: absolute;
+  padding: 0.2em;
+  border-radius: 12px;
+  border: 2px solid var(--children-border-color);
+  background-color: var(--children-bg-color);
+}
+.menu-children ul {
+  list-style: none inside;
+  padding: 0;
+  margin: 0;
+}
+.menu-child {
+  margin: 0.1em;
+}
+.menu-child .menu-link {
+  font-size: var(--child-item-height);
+  color: var(--children-link-color);
+}
+.menu-child .menu-link-active {
+  text-decoration-color: var(--children-link-decoration-color);
+}
+.menu-child .menu-link:hover {
+  color: var(--children-link-hover-color);
+}

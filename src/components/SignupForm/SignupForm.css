@@ -1,7 +1,4 @@
-nav {
-  font-style: italic;
-}
-main {
+#signup {
   display: flex;
   flex-flow: column;
   align-items: center;

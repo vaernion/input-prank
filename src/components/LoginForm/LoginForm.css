@@ -1,7 +1,4 @@
-nav {
-  font-style: italic;
-}
-main {
+#login {
   display: flex;
   flex-flow: column;
   align-items: center;

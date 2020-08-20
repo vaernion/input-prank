@@ -1,25 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import * as React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import "./App.css";
+import { ErrorBoundary } from "./components/ErrorBoundary";
+import { Menu } from "./components/Menu";
+import Store from "./components/Store";
+import { Home } from "./routes/Home";
+import { Signup } from "./routes/Signup";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <ErrorBoundary>
+        <Store>
+          <Router>
+            <nav>
+              <Menu />
+            </nav>
+            <main>
+              <Switch>
+                <Route exact path="/">
+                  <Home />
+                </Route>
+                <Route path="/signup">
+                  <Signup />
+                </Route>
+                <Route path="/secret"></Route>
+              </Switch>
+            </main>
+          </Router>
+        </Store>
+      </ErrorBoundary>
+    </>
   );
 }
 
