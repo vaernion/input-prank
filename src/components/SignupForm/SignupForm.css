@@ -3,3 +3,7 @@
   flex-flow: column;
   align-items: center;
 }
+
+.generated-input {
+  width: 2rem;
+}

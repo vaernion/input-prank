@@ -11,7 +11,6 @@ export function LoginForm() {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [errorMessage, setErrorMessage] = React.useState("");
-  const [attempts, setAttempts] = React.useState(0);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setErrorMessage("");
@@ -25,6 +24,8 @@ export function LoginForm() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    dispatch({ type: "LOGIN_ATTEMPT" });
 
     // normal validation
     if (
@@ -40,11 +41,10 @@ export function LoginForm() {
 
     // random shenanigans
     // TODO: decide if easier or harder than signup
-    if (!attempts || Math.random() < 0.7) {
+    if (!state.loginAttempts || Math.random() < 0.6) {
       setErrorMessage(randomError());
       setUsername("");
       setPassword("");
-      setAttempts((a) => a + 1);
       return;
     }
 
@@ -67,6 +67,7 @@ export function LoginForm() {
           placeholder="username"
           value={username}
           onChange={handleChange}
+          autoFocus
         />
         <label htmlFor="password">password</label>
         <input

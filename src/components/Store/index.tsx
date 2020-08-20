@@ -4,16 +4,20 @@ import { User } from "../../classes/User";
 type State = {
   user: User | null;
   users: User[];
+  signupAttempts: number;
+  loginAttempts: number;
 };
 const initialState: State = {
   user: null,
   // user: new User("a", "a"),
   users: [],
+  signupAttempts: 0,
+  loginAttempts: 0,
 };
 
 type Action =
   | {
-      type: "DROP_TABLES" | "LOGOUT";
+      type: "DROP_TABLES" | "LOGOUT" | "SIGNUP_ATTEMPT" | "LOGIN_ATTEMPT";
     }
   | {
       type: "SIGNUP" | "LOGIN";
@@ -30,6 +34,10 @@ const storeReducer = (state: State, action: Action): State => {
       return { ...state, user: action.payload };
     case "LOGOUT":
       return { ...state, user: null };
+    case "SIGNUP_ATTEMPT":
+      return { ...state, signupAttempts: state.signupAttempts + 1 };
+    case "LOGIN_ATTEMPT":
+      return { ...state, loginAttempts: state.loginAttempts + 1 };
   }
 };
 

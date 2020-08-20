@@ -17,6 +17,13 @@ export function Secret() {
 
   return (
     <>
+      <div className="secret-greetings">
+        <h3>You made it!</h3>
+        <p>
+          You tried {state.signupAttempts} times to sign up and{" "}
+          {state.loginAttempts} times to log in
+        </p>
+      </div>
       <div className="video-wrapper">
         <div className="youtube-embed">
           <iframe

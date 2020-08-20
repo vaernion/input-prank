@@ -11,9 +11,9 @@ export class User {
   }
 
   static isPasswordvalid(password: string) {
-    return password.length >= 3;
+    return password.length >= 5;
   }
   static isUsernameValid(username: string) {
-    return username.length >= 3;
+    return username.length >= 4;
   }
 }
