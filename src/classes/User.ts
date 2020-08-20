@@ -10,7 +10,10 @@ export class User {
     this.password = password;
   }
 
-  static validatePassword(user: User) {
-    return user.password.length >= 5;
+  static isPasswordvalid(password: string) {
+    return password.length >= 3;
+  }
+  static isUsernameValid(username: string) {
+    return username.length >= 3;
   }
 }

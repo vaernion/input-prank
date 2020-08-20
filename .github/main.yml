@@ -1,0 +1,28 @@
+name: Build & Deploy to GH Pages
+
+on:
+  push:
+    branches: [master]
+    paths-ignore:
+      - "README.md"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install and test
+        run: |
+          yarn install
+          yarn test
+
+      - name: Build
+        run: yarn build
+
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: build

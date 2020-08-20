@@ -8,7 +8,7 @@ export const menuItems: MenuItem[] = [
   },
   {
     path: "/signup",
-    name: "Signup",
+    name: "Sign up",
     exact: true,
   },
 ];

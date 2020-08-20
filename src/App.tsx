@@ -5,6 +5,7 @@ import { ErrorBoundary } from "./components/ErrorBoundary";
 import { Menu } from "./components/Menu";
 import Store from "./components/Store";
 import { Home } from "./routes/Home";
+import { Secret } from "./routes/Secret";
 import { Signup } from "./routes/Signup";
 
 function App() {
@@ -24,7 +25,9 @@ function App() {
                 <Route path="/signup">
                   <Signup />
                 </Route>
-                <Route path="/secret"></Route>
+                <Route path="/secret">
+                  <Secret />
+                </Route>
               </Switch>
             </main>
           </Router>

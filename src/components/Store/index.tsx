@@ -2,19 +2,18 @@ import * as React from "react";
 import { User } from "../../classes/User";
 
 type State = {
-  isLoggedIn: boolean;
-  user: User;
+  user: User | null;
   users: User[];
 };
 const initialState: State = {
-  isLoggedIn: false,
-  user: new User("dummy", "dummy"),
+  user: null,
+  // user: new User("a", "a"),
   users: [],
 };
 
 type Action =
   | {
-      type: "DROP_TABLES";
+      type: "DROP_TABLES" | "LOGOUT";
     }
   | {
       type: "SIGNUP" | "LOGIN";
@@ -29,6 +28,8 @@ const storeReducer = (state: State, action: Action): State => {
       return { ...state, users: [...state.users, action.payload] };
     case "LOGIN":
       return { ...state, user: action.payload };
+    case "LOGOUT":
+      return { ...state, user: null };
   }
 };
 

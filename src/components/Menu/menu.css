@@ -2,6 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 50vw;
 
   --link-color: blue;
   --link-active-color: black;
@@ -66,4 +67,12 @@
 }
 .menu-child .menu-link:hover {
   color: var(--children-link-hover-color);
+}
+
+.logout {
+  position: absolute;
+  right: 20%;
+  top: 5%;
+  font-style: normal;
+  margin-left: 2rem;
 }

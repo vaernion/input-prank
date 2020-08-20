@@ -1,8 +1,26 @@
 nav {
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
   font-style: italic;
+  min-height: 20vh;
 }
 main {
   display: flex;
   flex-flow: column;
   align-items: center;
+  justify-content: center;
+  min-height: 30vh;
+}
+
+button {
+  margin: 0.5rem;
+  border-radius: 0.5rem;
+}
+button:hover {
+  background-color: orange;
+}
+
+.home-message {
+  margin-top: 5rem;
 }

@@ -4,7 +4,7 @@ import { SignupForm } from "../../components/SignupForm";
 export function Signup() {
   return (
     <>
-      <h1>Signup</h1>
+      <h2>Sign up</h2>
       <SignupForm />
     </>
   );
