@@ -161,8 +161,10 @@ export function SignupForm() {
           ))}
         </select>
         <button type="submit">Signup</button>
-        <div>{errorMessage}</div>
       </form>
+      <div className="static-addon-outer">
+        <span className="static-addon-inner">{errorMessage}</span>
+      </div>
     </>
   );
 }

@@ -24,3 +24,17 @@ button:hover {
 .home-message {
   margin-top: 5rem;
 }
+.wrap-fix {
+  white-space: pre-wrap;
+}
+.static-addon-outer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%;
+}
+.static-addon-inner {
+  position: absolute;
+  height: 0%;
+}

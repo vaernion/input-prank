@@ -19,7 +19,7 @@ export function Home() {
     <>
       <h1>The Log In Challenge</h1>
       <LoginForm />
-      <h4 className="home-message">{message}</h4>
+
       {state.user ? (
         <div id="reward">
           <NavLink to="/secret">
@@ -27,6 +27,12 @@ export function Home() {
           </NavLink>
         </div>
       ) : null}
+
+      <div className="static-addon-outer">
+        <span className="static-addon-inner">
+          <h4 className="home-message">{message}</h4>
+        </span>
+      </div>
     </>
   );
 }

@@ -101,51 +101,52 @@ export function LoginForm() {
 
   return (
     <>
-      <div className={state.hasRestoredTable ? "dancing-outer" : ""}>
-        <form
-          id="login"
-          onSubmit={handleSubmit}
-          className={state.hasRestoredTable ? "dancing-inner" : ""}
-        >
-          <label htmlFor="username">username</label>
-          <input
-            type="text"
-            name="username"
-            id="username"
-            placeholder="username"
-            value={username}
-            onChange={handleChange}
-            autoFocus
-            disabled={state.hasDroppedTable}
-          />
-          <label htmlFor="password">password</label>
-          <input
-            type="password"
-            name="password"
-            id="password"
-            placeholder="password"
-            value={password}
-            onChange={handleChange}
-            disabled={state.hasDroppedTable}
-          />
-          {state.hasDroppedTable ? (
-            <button
-              type="button"
-              style={restoreButtonStyle}
-              onClick={handleRestoreButton}
-              // prevent users from tab selecting element and spamming space
-              // at the cost of throwing accessability out the window
-              // tabIndex={-1}
-            >
-              Restore backup
-            </button>
-          ) : (
-            <button type="submit">Log in</button>
-          )}
-
-          <div className="errormessage">{errorMessage}</div>
-        </form>
-      </div>
+      {!state.user ? (
+        <div className={state.hasRestoredTable ? "dancing-outer" : ""}>
+          <form
+            id="login"
+            onSubmit={handleSubmit}
+            className={state.hasRestoredTable ? "dancing-inner" : ""}
+          >
+            <label htmlFor="username">username</label>
+            <input
+              type="text"
+              name="username"
+              id="username"
+              placeholder="username"
+              value={username}
+              onChange={handleChange}
+              autoFocus
+              disabled={state.hasDroppedTable}
+            />
+            <label htmlFor="password">password</label>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="password"
+              value={password}
+              onChange={handleChange}
+              disabled={state.hasDroppedTable}
+            />
+            {state.hasDroppedTable ? (
+              <button
+                type="button"
+                style={restoreButtonStyle}
+                onClick={handleRestoreButton}
+                // prevent users from tab selecting element and spamming space
+                // at the cost of throwing accessability out the window
+                // tabIndex={-1}
+              >
+                Restore backup
+              </button>
+            ) : (
+              <button type="submit">Log in</button>
+            )}
+          </form>
+          <span className="wrap-fix">{errorMessage}</span>
+        </div>
+      ) : null}
     </>
   );
 }
