@@ -18,16 +18,16 @@ export function SignupForm() {
   const [password, setPassword] = React.useState("");
   const [errorMessage, setErrorMessage] = React.useState("");
 
-  const [shuffledList, setShuffledList] = React.useState<string[]>([]);
+  const [shuffledList, setShuffledList] = React.useState(passwordsList);
 
   // shuffles the password list even while the select is open
   // seems to "just work" as hoped in both firefox and chrome
   React.useEffect(() => {
-    let timer = setTimeout(() => {
+    const shuffleTimer = setTimeout(() => {
       setShuffledList(shuffle(passwordsList));
-    }, 1000);
+    }, difficulty.shuffleTimer);
     return () => {
-      clearTimeout(timer);
+      clearTimeout(shuffleTimer);
     };
   }, [shuffledList]);
 
@@ -167,7 +167,7 @@ export function SignupForm() {
           onChange={handleChange}
         >
           <option value=""></option>
-          {shuffle(passwordsList).map((e) => (
+          {shuffledList.map((e) => (
             <option key={e} value={e}>
               {e}
             </option>

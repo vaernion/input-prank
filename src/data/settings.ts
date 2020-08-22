@@ -1,6 +1,7 @@
 export const difficulty = {
   minPasswordLength: 6,
   minUsernameLength: 5,
+  shuffleTimer: 1000,
   nameSplicer: {
     threshold: 3,
     chance: 0.3,
