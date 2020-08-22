@@ -4,7 +4,7 @@
   justify-content: center;
   width: 50vw;
 
-  --link-color: blue;
+  --link-color: maroon;
   --link-active-color: black;
   --link-decoration-color: red;
   --link-hover-color: black;
@@ -39,7 +39,7 @@
 }
 .menu-parent {
   height: 100%;
-  background-color: var(--parent-bg-color);
+  /* background-color: var(--parent-bg-color); */
 }
 .menu-children {
   display: flex;

@@ -1,5 +1,5 @@
 export const difficulty = {
-  minPasswordLength: 5,
+  minPasswordLength: 6,
   minUsernameLength: 5,
   nameSplicer: {
     threshold: 3,

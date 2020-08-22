@@ -18,6 +18,19 @@ export function SignupForm() {
   const [password, setPassword] = React.useState("");
   const [errorMessage, setErrorMessage] = React.useState("");
 
+  const [shuffledList, setShuffledList] = React.useState<string[]>([]);
+
+  // shuffles the password list even while the select is open
+  // seems to "just work" as hoped in both firefox and chrome
+  React.useEffect(() => {
+    let timer = setTimeout(() => {
+      setShuffledList(shuffle(passwordsList));
+    }, 1000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [shuffledList]);
+
   // sometimes remove a few characters from the username
   // can/should adjust values
   React.useEffect(() => {
@@ -160,7 +173,7 @@ export function SignupForm() {
             </option>
           ))}
         </select>
-        <button type="submit">Signup</button>
+        <button type="submit">Sign up</button>
       </form>
       <div className="static-addon-outer">
         <span className="static-addon-inner">{errorMessage}</span>
