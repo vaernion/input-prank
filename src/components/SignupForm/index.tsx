@@ -3,7 +3,9 @@ import { useHistory } from "react-router-dom";
 import { User } from "../../classes/User";
 import { DispatchContext, StateContext } from "../../components/Store";
 import passwordsList from "../../data/passwords.json";
-import { randomError } from "../../utils/utils";
+import { difficulty } from "../../data/settings";
+import { randomError } from "../../utils/randomError";
+import { shuffle } from "../../utils/shuffle";
 import "./SignupForm.css";
 
 export function SignupForm() {
@@ -19,13 +21,14 @@ export function SignupForm() {
   // sometimes remove a few characters from the username
   // can/should adjust values
   React.useEffect(() => {
-    if (username.length > 3 && Math.random() < 0.3) {
+    if (
+      username.length > difficulty.nameSplicer.threshold &&
+      Math.random() < difficulty.nameSplicer.chance
+    ) {
       let arr = username.split("");
-
-      for (let i = 0; i < 2; ++i) {
+      for (let i = 0; i < difficulty.nameSplicer.count; ++i) {
         arr.splice(Math.floor(Math.random() * arr.length), 1);
       }
-
       setUsername(arr.join(""));
     }
   }, [username]);
@@ -44,7 +47,6 @@ export function SignupForm() {
 
   const generateInputs = (count: number): JSX.Element[] => {
     const elements = [];
-
     for (let i = 0; i < count; i++) {
       let element = (
         <input
@@ -64,17 +66,14 @@ export function SignupForm() {
       );
       elements.push(element);
     }
-
     return elements;
   };
 
   const parseInputs = (inputs: Array<HTMLInputElement>): string => {
     let string = "";
-
     for (let child of inputs) {
       string += child.value;
     }
-
     return string;
   };
 
@@ -84,26 +83,23 @@ export function SignupForm() {
     setErrorMessage("");
 
     if (event.currentTarget.name === "username") {
-      let tempName = parseInputs(
+      let mergedInputs = parseInputs(
         Array.from<any>(usernameRef.current!.children)
       );
-
-      setUsername(tempName);
-
-      if (!User.isUsernameValid(tempName)) {
+      setUsername(mergedInputs);
+      if (!User.isUsernameValid(mergedInputs)) {
         setErrorMessage("username is too short");
       }
     } else if (event.currentTarget.name === "password") {
+      setPassword(event.currentTarget.value);
       if (!User.isPasswordvalid(event.currentTarget.value)) {
         setErrorMessage("password is too short");
       }
-      setPassword(event.currentTarget.value);
     }
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    dispatch({ type: "SIGNUP_ATTEMPT" });
 
     // normal validation
     if (!User.isUsernameValid(username) || !User.isPasswordvalid(password)) {
@@ -118,18 +114,22 @@ export function SignupForm() {
       return;
     }
 
+    // after normal validation so player can't win on first legit attempt
+    dispatch({ type: "SIGNUP_ATTEMPT" });
+
     // ensure same name can't be spammed until it works
     dispatch({ type: "USERNAME_USED", payload: username });
 
     // random shenanigans
-    if (!state.signupAttempts || Math.random() < 0.3) {
+    if (
+      state.signupAttempts < difficulty.signup.minAttempts ||
+      Math.random() < difficulty.signup.randomErrorChance
+    ) {
       setUsername("");
       setPassword("");
       setErrorMessage(randomError());
       return;
     }
-
-    // TODO: add new shenanigans
 
     // user survived the signup trials
     dispatch({ type: "SIGNUP", payload: new User(username, password) });
@@ -154,7 +154,7 @@ export function SignupForm() {
           onChange={handleChange}
         >
           <option value=""></option>
-          {passwordsList.map((e) => (
+          {shuffle(passwordsList).map((e) => (
             <option key={e} value={e}>
               {e}
             </option>

@@ -18,7 +18,7 @@ export function Secret() {
   return (
     <>
       <div className="secret-greetings">
-        <h3>You made it!</h3>
+        <h3>Congratulations!</h3>
         <p>
           You tried {state.signupAttempts} times to sign up and{" "}
           {state.loginAttempts} times to log in

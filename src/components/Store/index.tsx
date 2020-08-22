@@ -7,6 +7,9 @@ type State = {
   signupAttempts: number;
   loginAttempts: number;
   usedNames: string[];
+  hasDroppedTable: boolean;
+  hasRestoredTable: boolean;
+  usersBackup: User[];
 };
 const initialState: State = {
   user: null,
@@ -16,11 +19,22 @@ const initialState: State = {
   signupAttempts: 0,
   loginAttempts: 0,
   usedNames: [],
+  hasDroppedTable: false,
+  // hasDroppedTable: true,
+  hasRestoredTable: false,
+  // hasRestoredTable: true,
+  usersBackup: [],
+  // usersBackup: [new User("a", "a")],
 };
 
 type Action =
   | {
-      type: "DROP_TABLES" | "LOGOUT" | "SIGNUP_ATTEMPT" | "LOGIN_ATTEMPT";
+      type:
+        | "LOGOUT"
+        | "SIGNUP_ATTEMPT"
+        | "LOGIN_ATTEMPT"
+        | "DROP_TABLES"
+        | "RESTORE_BACKUP";
     }
   | {
       type: "SIGNUP" | "LOGIN";
@@ -33,20 +47,34 @@ type Action =
 
 const storeReducer = (state: State, action: Action): State => {
   switch (action.type) {
-    case "DROP_TABLES":
-      return initialState;
     case "SIGNUP":
       return { ...state, users: [...state.users, action.payload] };
     case "LOGIN":
       return { ...state, user: action.payload };
     case "LOGOUT":
-      return { ...state, user: null };
+      return { ...state, user: null, hasRestoredTable: false };
     case "SIGNUP_ATTEMPT":
       return { ...state, signupAttempts: state.signupAttempts + 1 };
     case "LOGIN_ATTEMPT":
       return { ...state, loginAttempts: state.loginAttempts + 1 };
     case "USERNAME_USED":
       return { ...state, usedNames: [...state.usedNames, action.payload] };
+    case "DROP_TABLES":
+      return {
+        ...initialState,
+        signupAttempts: state.signupAttempts,
+        loginAttempts: state.loginAttempts,
+        hasDroppedTable: true,
+        usersBackup: state.users,
+      };
+    case "RESTORE_BACKUP":
+      return {
+        ...state,
+        hasDroppedTable: false,
+        hasRestoredTable: true,
+        users: state.usersBackup,
+        usersBackup: [],
+      };
   }
 };
 

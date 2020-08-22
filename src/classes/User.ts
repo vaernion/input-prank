@@ -1,3 +1,5 @@
+import { difficulty } from "../data/settings";
+
 export class User {
   static count: number = 0;
   id: number;
@@ -11,9 +13,9 @@ export class User {
   }
 
   static isPasswordvalid(password: string) {
-    return password.length >= 5;
+    return password.length >= difficulty.minPasswordLength;
   }
   static isUsernameValid(username: string) {
-    return username.length >= 4;
+    return username.length >= difficulty.minUsernameLength;
   }
 }
